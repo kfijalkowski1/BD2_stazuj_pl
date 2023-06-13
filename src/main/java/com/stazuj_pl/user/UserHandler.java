@@ -1,18 +1,20 @@
 package com.stazuj_pl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Service
+@Configurable
 public class UserHandler {
-    private static BeanPropertyRowMapper rowMapper = new BeanPropertyRowMapper<>(User.class);
+    private static final BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private static JdbcTemplate jdbcTemplate;
 
     public List<User> getAllUsers() {
         String sql = "SELECT * FROM Users";
@@ -20,10 +22,9 @@ public class UserHandler {
     }
 
     public User getUserInfo(int user_id) {
+
         String sql = "SELECT * FROM Users where user_id = ?";
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("age", user_id);  // Bind the parameter value
-        List<User> userData = jdbcTemplate.query(sql, (PreparedStatementSetter) paramMap, rowMapper);
+        List<User> userData = jdbcTemplate.query(sql, rowMapper, user_id); // if many Object[] {user_id...}
 //        if (userData.size() != 1) {
 //            return false;
 //        }
