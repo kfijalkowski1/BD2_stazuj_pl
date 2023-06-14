@@ -2,6 +2,8 @@ package com.stazuj_pl.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,5 +35,36 @@ public class UserHandler {
 //        }
 //        else {}//TODO
         return userData.get(0);
+    }
+
+    public ResponseEntity<HttpStatus> createUser(User user) {
+        String sql = "INSERT INTO Users (user_id, mail, hash_password, name, surname, login, photo_path, about_me) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUser_id(), user.getMail(), user.getHash_password(), user.getName(), user.getSurname(), user.getLogin(), user.getPhoto_path(), user.getAbout_me());
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
+
+    public boolean userExists(int id) {
+        List<User> userList = getAllUsers();
+        for (User user : userList) {
+            if (user.getUser_id() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ResponseEntity<HttpStatus> deleteUser(int id) {
+        if(userExists(id)) {
+            String sql = "DELETE from Users where user_id = ?";
+            jdbcTemplate.update(sql, id);
+            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+    }
+    public ResponseEntity<HttpStatus> setUserField(int id, String field, String value) {
+        User user = getUserById(id);
+        String sql = "UPDATE Users set ? = ? where user_id = ?";
+        jdbcTemplate.update(sql, field, value, id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 }
