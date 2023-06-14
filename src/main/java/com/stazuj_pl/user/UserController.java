@@ -1,19 +1,17 @@
 package com.stazuj_pl.user;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.xdevapi.JsonArray;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping(path="/users")
+@RequestMapping(path="/user")
 public class UserController {
     @Autowired
     UserHandler userHandler;
@@ -40,17 +38,12 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
         return userHandler.deleteUser(id);
     }
-    
+
     @PostMapping(
             value = "/editUser",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<User> editUser(@RequestBody User user) {
-        User readUser = userHandler.getUserById(user.getUser_id());
-        return ResponseEntity
-                .created(URI
-                        .create(String.format("/user/%s", readUser)))
-                .body(readUser);
+    public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
+        return userHandler.setUserField(data);
     }
-
 }
