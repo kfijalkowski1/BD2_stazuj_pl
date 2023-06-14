@@ -25,12 +25,11 @@ public class UserHandler {
         return new ArrayList<>(jdbcTemplate.query(sql, rowMapper));
     }
 
-    public User getUserInfo(int user_id) {
-
+    public User getUserById(int user_id) {
         String sql = "SELECT * FROM Users where user_id = ?";
-        List<User> userData = jdbcTemplate.query(sql, rowMapper, user_id); // if many Object[] {user_id...}
+        List<User> userData = jdbcTemplate.query(sql, rowMapper, user_id);
 //        if (userData.size() != 1) {
-//            return false;
+//            throw new Exception("AAAA");
 //        }
 //        else {}//TODO
         return userData.get(0);

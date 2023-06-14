@@ -16,9 +16,12 @@ public class UserController {
 
     @GetMapping(path="/getAll")
     public List<User> getAllUsers() {
-        List<User> result = userHandler.getAllUsers();
-        System.out.println(result);
-        return result;
+        return userHandler.getAllUsers();
+    }
+
+    @GetMapping(path="/getUserById/{id}")
+    public User getUserById(@PathVariable int id) {
+        return userHandler.getUserById(id);
     }
 
     @PostMapping(
@@ -26,7 +29,7 @@ public class UserController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<User> postBody(@RequestBody User user) {
-        User readUser = userHandler.getUserInfo(user.getUser_id());
+        User readUser = userHandler.getUserById(user.getUser_id());
         return ResponseEntity
                 .created(URI
                         .create(String.format("/user/%s", readUser)))
