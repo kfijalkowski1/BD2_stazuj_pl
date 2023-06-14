@@ -1,6 +1,10 @@
 package com.stazuj_pl.user;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.mysql.cj.xdevapi.JsonArray;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,14 @@ public class UserController {
     @GetMapping(path="/getUserById/{id}")
     public User getUserById(@PathVariable int id) {
         return userHandler.getUserById(id);
+    }
+
+    @PostMapping(
+        value = "/createUser",
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user) {
+        return userHandler.createUser(user);
     }
 
     @PostMapping(
