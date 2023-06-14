@@ -42,6 +42,25 @@ public class UserHandler {
         jdbcTemplate.update(sql, user.getUser_id(), user.getMail(), user.getHash_password(), user.getName(), user.getSurname(), user.getLogin(), user.getPhoto_path(), user.getAbout_me());
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
+
+    public boolean userExists(int id) {
+        List<User> userList = getAllUsers();
+        for (User user : userList) {
+            if (user.getUser_id() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ResponseEntity<HttpStatus> deleteUser(int id) {
+        if(userExists(id)) {
+            String sql = "DELETE from Users where user_id = ?";
+            jdbcTemplate.update(sql, id);
+            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+    }
     public ResponseEntity<HttpStatus> setUserField(int id, String field, String value) {
         User user = getUserById(id);
         String sql = "UPDATE Users set ? = ? where user_id = ?";

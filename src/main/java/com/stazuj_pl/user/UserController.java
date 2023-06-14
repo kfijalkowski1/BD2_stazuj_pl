@@ -32,15 +32,20 @@ public class UserController {
         value = "/createUser",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user) {
+    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         return userHandler.createUser(user);
     }
 
+    @DeleteMapping(path="deleteUser/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
+        return userHandler.deleteUser(id);
+    }
+    
     @PostMapping(
-            value = "/getUser",
+            value = "/editUser",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<User> postBody(@RequestBody User user) {
+    public ResponseEntity<User> editUser(@RequestBody User user) {
         User readUser = userHandler.getUserById(user.getUser_id());
         return ResponseEntity
                 .created(URI
