@@ -7,18 +7,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Configurable
+//@Service
+//@Configurable
+@Repository
 public class UserHandler {
     private static final BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+
     @Autowired
-    private static JdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;// = new JdbcTemplate();
 
     public List<User> getAllUsers() {
         String sql = "SELECT * FROM Users";
-        return jdbcTemplate.query(sql, rowMapper);
+        return new ArrayList<>(jdbcTemplate.query(sql, rowMapper));
     }
 
     public User getUserInfo(int user_id) {
