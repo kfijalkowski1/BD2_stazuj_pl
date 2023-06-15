@@ -50,7 +50,10 @@ public abstract class CrudHandler {
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 
+//    public abstract int getIdByUniqueField(String uniqueFieldValue);
+
     public abstract ResponseEntity<HttpStatus> addEntity(EntityObj e);
+    public abstract ResponseEntity<HttpStatus> addEntity(Map<String, Object> data);
 
     public abstract ResponseEntity<HttpStatus> modifyEntity(Map<String, Object> data);
 }
