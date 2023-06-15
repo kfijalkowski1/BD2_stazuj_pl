@@ -3,6 +3,7 @@ package com.stazuj_pl.user;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,17 @@ public class UserHandler extends CrudHandler {
         this.tableName = "Users";
         this.tableMainKey = "user_id";
         this.rowMapper = new BeanPropertyRowMapper<>(User.class);
+    }
+
+    @Override
+    public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    public int getIdByUniqueField(String uniqueFieldValue) {
+        String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
+        List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
+        return user.get(0).getUser_id();
     }
 
     @Override
