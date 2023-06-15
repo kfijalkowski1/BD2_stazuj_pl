@@ -36,14 +36,7 @@ public class PostsHandler extends CrudHandler {
             Posts post = (Posts) e;
             String sql = String.format("INSERT INTO %s (author_id, title, content, type, publication_date) " +
                     "VALUES (?, ?, ?, ?, ?)", tableName);
-
-            String pattern = "yyyy-MM-dd HH:mm:ss";
-            SimpleDateFormat simpleDateFormat =
-                    new SimpleDateFormat(pattern, new Locale("pl", "PL"));
-
-            String date = simpleDateFormat.format(new Date());
-
-            int changedRows = jdbcTemplate.update(sql, post.getAuthor_id(), post.getTitle(), post.getContent(), post.getType(), date);
+            int changedRows = jdbcTemplate.update(sql, post.getAuthor_id(), post.getTitle(), post.getContent(), post.getType(), post.getPublication_date());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {
