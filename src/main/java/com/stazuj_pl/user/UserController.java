@@ -38,8 +38,8 @@ public class UserController {
         return userHandler.addEntity(user);
     }
 
-    @DeleteMapping(path="deleteUser/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
+    @DeleteMapping(path="/deleteUser")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
         return userHandler.deleteById(id);
     }
 
