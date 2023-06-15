@@ -51,7 +51,7 @@ public class Student extends EntityObj {
         this.academic_year = academic_year;
     }
 
-    public int isLooking_for_job() {
+    public int getLooking_for_job() {
         return looking_for_job;
     }
 
@@ -59,5 +59,11 @@ public class Student extends EntityObj {
         this.looking_for_job = looking_for_job;
     }
 
+    public String getKeywords() {
+        return keywords;
+    }
 
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 }
