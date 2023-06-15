@@ -1,4 +1,4 @@
-package com.stazuj_pl.Addresses;
+package com.stazuj_pl.Posts;
 
 
 import com.stazuj_pl.CrudHandler;
@@ -12,29 +12,31 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 @Repository
-public class AddressesHandler extends CrudHandler {
+public class PostsHandler extends CrudHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    AddressesHandler() {
-        this.tableName = "Addresses";
-        this.tableMainKey = "address_id";
-        this.rowMapper = new BeanPropertyRowMapper<>(Addresses.class);
-        this.modifiableKeys = Arrays.asList("country_name", "street_name", "postal_code", "house_nr");
+    PostsHandler() {
+        this.tableName = "Posts";
+        this.tableMainKey = "post_id";
+        this.rowMapper = new BeanPropertyRowMapper<>(Posts.class);
+        this.modifiableKeys = Arrays.asList("title", "content", "type");
     }
 
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
-            Addresses add = (Addresses) e;
-            String sql = String.format("INSERT INTO %s (country_name, street_name, postal_code, house_nr) " +
-                    "VALUES (?, ?, ?, ?)", tableName);
-            int changedRows = jdbcTemplate.update(sql, add.getCountry_name(), add.getStreet_name(),
-                    add.getPostal_code(), add.getHouse_nr());
+            Posts post = (Posts) e;
+            String sql = String.format("INSERT INTO %s (author_id, title, content, type, publication_date) " +
+                    "VALUES (?, ?, ?, ?, ?)", tableName);
+            int changedRows = jdbcTemplate.update(sql, post.getAuthor_id(), post.getTitle(), post.getContent(), post.getType(), post.getPublication_date());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {

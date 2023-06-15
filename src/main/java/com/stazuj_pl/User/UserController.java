@@ -38,7 +38,7 @@ public class UserController {
         return userHandler.addEntity(user);
     }
 
-    @DeleteMapping(path="/delete")
+    @DeleteMapping(path="/deleteById")
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
         return userHandler.deleteById(id);
     }

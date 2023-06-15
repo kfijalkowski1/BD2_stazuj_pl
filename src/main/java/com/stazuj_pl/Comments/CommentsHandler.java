@@ -11,7 +11,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
 @Repository
 public class CommentsHandler extends CrudHandler {
@@ -31,7 +34,14 @@ public class CommentsHandler extends CrudHandler {
             Comments cmt = (Comments) e;
             String sql = String.format("INSERT INTO %s (content, timestamp, post_id, user_id) " +
                     "VALUES (?, ?, ?, ?)", tableName);
-            int changedRows = jdbcTemplate.update(sql, cmt.getContent(), cmt.getTimestamp(),
+
+            String pattern = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat simpleDateFormat =
+                    new SimpleDateFormat(pattern, new Locale("pl", "PL"));
+
+            String date = simpleDateFormat.format(new Date());
+
+            int changedRows = jdbcTemplate.update(sql, cmt.getContent(), date,
                     cmt.getPost_id(), cmt.getUser_id());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);

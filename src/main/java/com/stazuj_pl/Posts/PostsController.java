@@ -1,4 +1,4 @@
-package com.stazuj_pl.Student;
+package com.stazuj_pl.Posts;
 
 
 import com.stazuj_pl.EntityObj;
@@ -12,42 +12,42 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/student")
-public class StudentController {
+@RequestMapping(path="/post")
+public class PostsController {
     @Autowired
-    StudentHandler userHandler;
+    PostsHandler postsHandler;
 
     @GetMapping(path="/getAll")
-    public List<EntityObj> getAllUsers() {
-        return userHandler.getAll();
+    public List<EntityObj> getAllPosts() {
+        return postsHandler.getAll();
     }
 
     @PostMapping(
             value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public EntityObj getUserById(@RequestBody int id) {
-        return userHandler.getById(id);
+    public EntityObj getPostById(@RequestBody int id) {
+        return postsHandler.getById(id);
     }
 
     @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> createUser(@RequestBody Map<String, Object> data) {
-        return userHandler.addEntity(data);
+    public ResponseEntity<HttpStatus> createPost(@RequestBody Posts post) {
+        return postsHandler.addEntity(post);
     }
 
-    @DeleteMapping(path="/deleteById")
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
-        return userHandler.deleteById(id);
+    @DeleteMapping(path = "/deleteById")
+    public ResponseEntity<HttpStatus> deletePost(@RequestBody int id) {
+        return postsHandler.deleteById(id);
     }
 
     @PostMapping(
             value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
-        return userHandler.modifyEntity(data);
+    public ResponseEntity<HttpStatus> editPosts(@RequestBody Map<String, Object> data) {
+        return postsHandler.modifyEntity(data);
     }
 }
