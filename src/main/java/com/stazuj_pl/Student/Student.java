@@ -31,7 +31,7 @@ public class Student extends EntityObj {
         return user_student_id;
     }
 
-    public void setUser_id(int user_student_id) {
+    public void setUser_student_id(int user_student_id) {
         this.user_student_id = user_student_id;
     }
 

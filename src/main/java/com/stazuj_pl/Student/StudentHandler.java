@@ -76,8 +76,7 @@ public class StudentHandler extends CrudHandler {
             if (addUser != 1) {
                 return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
             }
-            int user_id = getIdByUniqueField(data.get("login").toString());
-
+            int user_id = userHandler.getIdByUniqueField(data.get("login").toString());
             int addStudent = jdbcTemplate.update(
                     sql_student,
                     data.get("academic_info_id").toString(),
