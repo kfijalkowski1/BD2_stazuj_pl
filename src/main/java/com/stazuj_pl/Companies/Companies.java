@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Comments")
+@Table(name = "Companies")
 public class Companies extends EntityObj {
 
     // pola z DB
@@ -16,7 +16,7 @@ public class Companies extends EntityObj {
 
     private String name;
     private String logo_path;
-    private int about_me;
+    private String about_me;
 
     public int getCompany_id() {
         return company_id;
@@ -42,11 +42,11 @@ public class Companies extends EntityObj {
         this.logo_path = logo_path;
     }
 
-    public int getAbout_me() {
+    public String getAbout_me() {
         return about_me;
     }
 
-    public void setAbout_me(int about_me) {
+    public void setAbout_me(String about_me) {
         this.about_me = about_me;
     }
 

@@ -52,7 +52,7 @@ public abstract class CrudHandler {
             for (String key : modifiableKeys) {
                 if (data.keySet().contains(key)) {
                     String sql = String.format("update %s set %s = ? where %s = ?", tableName, key, tableMainKey);
-                    affected = jdbcTemplate.update(sql, data.get(key).toString());
+                    affected = jdbcTemplate.update(sql, data.get(key).toString(), data.get(tableMainKey).toString());
                     if (affected != 1) {
                         break;
                     }
