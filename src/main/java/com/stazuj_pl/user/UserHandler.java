@@ -24,11 +24,6 @@ public class UserHandler extends CrudHandler {
         this.rowMapper = new BeanPropertyRowMapper<>(User.class);
     }
 
-    @Override
-    public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
-        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
-    }
-
     public int getIdByUniqueField(String uniqueFieldValue) {
         String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
         List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
@@ -52,34 +47,6 @@ public class UserHandler extends CrudHandler {
 
         return (changedRows == 1) ? new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
-
-    @Override
-    public ResponseEntity<HttpStatus> modifyEntity(Map<String, Object> data) {
-        List<String> listOfKeys = Arrays.asList("name", "surname", "mail", "login", "photo_path", "about_me");
-        List<EntityObj> listUsers = getAll();
-
-        int affected = -1;
-        for (String key : listOfKeys) {
-            if (data.containsKey(key)) {
-
-                for(EntityObj query_user : listUsers) {
-                    User user = (User) query_user;
-                    if(key.equals("mail") && user.getMail().equals(data.get("mail").toString())) {
-                        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
-                    }
-                    if(key.equals("login") && user.getMail().equals(data.get("login").toString())) {
-                        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
-                    }
-                }
-
-                String sql = String.format("update Users set %s = ? where user_id = ?", key);
-                affected = jdbcTemplate.update(sql, data.get(key).toString(), data.get("user_id").toString());
-            }
-        }
-        if (affected == 1) {
-            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-        }
-        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
-    }
+    
 
 }
