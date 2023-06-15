@@ -40,11 +40,11 @@ public class UserHandler extends CrudHandler {
                 String sql = String.format("update Users set %s = ? where user_id = ?", key);
                 affected = jdbcTemplate.update(sql, data.get(key).toString(), data.get("user_id").toString());
                 if (affected != 1) {
-                    break; //@TODO raczej exception
+                    break;
                 }
             }
         }
-        if (affected != 1) {
+        if (affected == 1) {
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
