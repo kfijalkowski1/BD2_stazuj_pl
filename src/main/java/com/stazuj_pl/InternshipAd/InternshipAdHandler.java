@@ -28,11 +28,6 @@ public class InternshipAdHandler extends CrudHandler {
     }
 
     @Override
-    public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
-        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
-    }
-
-    @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         InternshipAd ad = (InternshipAd) e;
         String sql = String.format("INSERT INTO %s (internship_description, publication_date, position_type, " +

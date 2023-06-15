@@ -39,7 +39,7 @@ public class StudentHandler extends CrudHandler {
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
-    @Override
+
     public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
         List<String> obligatoryFields = Arrays.asList("hash_password", "name", "surname", "login", "academic_info_id");
         List<String> optionaryFields = Arrays.asList("mail", "photo_path", "about_me", "academic_year", "looking_for_job", "keywords");
