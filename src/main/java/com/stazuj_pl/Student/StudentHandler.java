@@ -29,8 +29,7 @@ public class StudentHandler extends CrudHandler {
         this.tableName = "Students";
         this.tableMainKey = "student_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Student.class);
-        this.modifiableKeys = Arrays.asList("name", "surname", "mail", "login", "photo_path", "about_me",
-                "academic_year", "looking_for_job", "keywords", "academic_info_id");
+        this.modifiableKeys = Arrays.asList("academic_year", "looking_for_job", "keywords", "academic_info_id");
     }
 
     @Override

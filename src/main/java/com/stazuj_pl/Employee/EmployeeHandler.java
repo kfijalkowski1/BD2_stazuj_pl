@@ -28,8 +28,7 @@ public class EmployeeHandler extends CrudHandler {
         this.tableName = "Employees";
         this.tableMainKey = "employee_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-        this.modifiableKeys = Arrays.asList("name", "surname", "mail", "login", "photo_path", "about_me",
-                "message_template", "search_number", "plan_type", "company_id");
+        this.modifiableKeys = Arrays.asList("message_template", "search_number", "plan_type", "company_id");
     }
 
     @Override
