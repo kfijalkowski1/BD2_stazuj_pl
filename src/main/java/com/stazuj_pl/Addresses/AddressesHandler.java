@@ -22,7 +22,7 @@ public class AddressesHandler extends CrudHandler {
     JdbcTemplate jdbcTemplate;
     AddressesHandler() {
         this.tableName = "Addresses";
-        this.tableMainKey = "address_Id";
+        this.tableMainKey = "address_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Addresses.class);
         this.modifiableKeys = Arrays.asList("country_name", "street_name", "postal_code", "house_nr");
     }

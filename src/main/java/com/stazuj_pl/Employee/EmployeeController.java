@@ -38,7 +38,7 @@ public class EmployeeController {
         return employeeHandler.addEntity(data);
     }
 
-    @DeleteMapping(path="/delete")
+    @DeleteMapping(path="/deleteById")
     public ResponseEntity<HttpStatus> deleteEmployee(@RequestBody int id) {
         return employeeHandler.deleteById(id);
     }

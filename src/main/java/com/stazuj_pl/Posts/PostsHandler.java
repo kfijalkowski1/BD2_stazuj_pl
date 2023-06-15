@@ -1,4 +1,4 @@
-package com.stazuj_pl.Comments;
+package com.stazuj_pl.Posts;
 
 
 import com.stazuj_pl.CrudHandler;
@@ -11,29 +11,31 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 @Repository
-public class CommentsHandler extends CrudHandler {
+public class PostsHandler extends CrudHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    CommentsHandler() {
-        this.tableName = "Comments";
-        this.tableMainKey = "comment_id";
-        this.rowMapper = new BeanPropertyRowMapper<>(Comments.class);
-        this.modifiableKeys = Arrays.asList("content");
+    PostsHandler() {
+        this.tableName = "Posts";
+        this.tableMainKey = "post_id";
+        this.rowMapper = new BeanPropertyRowMapper<>(Posts.class);
+        this.modifiableKeys = Arrays.asList("title", "content", "type");
     }
 
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
-            Comments cmt = (Comments) e;
-            String sql = String.format("INSERT INTO %s (content, timestamp, post_id, user_id) " +
-                    "VALUES (?, ?, ?, ?)", tableName);
+            Posts post = (Posts) e;
+            String sql = String.format("INSERT INTO %s (author_id, title, content, type, publication_date) " +
+                    "VALUES (?, ?, ?, ?, ?)", tableName);
 
             String pattern = "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat simpleDateFormat =
@@ -41,8 +43,7 @@ public class CommentsHandler extends CrudHandler {
 
             String date = simpleDateFormat.format(new Date());
 
-            int changedRows = jdbcTemplate.update(sql, cmt.getContent(), date,
-                    cmt.getPost_id(), cmt.getUser_id());
+            int changedRows = jdbcTemplate.update(sql, post.getAuthor_id(), post.getTitle(), post.getContent(), post.getType(), date);
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {
