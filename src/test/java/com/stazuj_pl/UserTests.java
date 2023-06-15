@@ -177,6 +177,62 @@ class UserTests {
         User user = (User) result;
         assert user.getUser_id() == -5;
         assert user.getName().equals("aja");
+
+        userController.deleteUser(-5);
     }
+
+    @Test
+    void editUserMoreFields() {
+        User testowy = new User();
+        testowy.setUser_id(-5);
+        testowy.setMail("TESTOWY-5");
+        testowy.setLogin("TESTOWYL-5");
+        testowy.setHash_password("TESTOWYH-5");
+        testowy.setName("a-5");
+        testowy.setSurname("b-5");
+
+        userController.createUser(testowy);
+        assert testowy.getName().equals("a-5");
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("user_id", -5);
+        data.put("name", "aaa");
+        data.put("surname", "bbb");
+        data.put("mail", "ccc");
+        data.put("photo_path", "ddd");
+        userController.editUser(data);
+
+        EntityObj result = userController.getUserById(-5);
+        User user = (User) result;
+        assert user.getUser_id() == -5;
+        assert user.getName().equals("aaa");
+        assert user.getSurname().equals("bbb");
+        assert user.getMail().equals("ccc");
+        assert user.getPhoto_path().equals("ddd");
+
+        userController.deleteUser(-5);
+    }
+
+    @Test
+    void editUserDoesntExist() {
+        User testowy = new User();
+        testowy.setUser_id(-5);
+        testowy.setMail("TESTOWY-5");
+        testowy.setLogin("TESTOWYL-5");
+        testowy.setHash_password("TESTOWYH-5");
+        testowy.setName("a-5");
+        testowy.setSurname("b-5");
+
+        userController.createUser(testowy);
+        assert testowy.getName().equals("a-5");
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("user_id", -50);
+        data.put("name", "aja");
+        assert userController.editUser(data).equals(ResponseEntity.status(HttpStatus.BAD_REQUEST));
+
+        userController.deleteUser(-5);
+    }
+
 }
 
