@@ -26,8 +26,8 @@ public class UserController {
             value = "/getUserById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public EntityObj getUserById(@PathVariable User user) {
-        return userHandler.getById(user.getUser_id());
+    public EntityObj getUserById(@RequestBody int id) {
+        return userHandler.getById(id);
     }
 
     @PostMapping(
