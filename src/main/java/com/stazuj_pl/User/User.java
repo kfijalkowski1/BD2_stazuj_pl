@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User extends EntityObj {
 
     // pola z DB
