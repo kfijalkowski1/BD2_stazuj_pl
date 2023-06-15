@@ -46,6 +46,6 @@ public class UserHandler extends CrudHandler {
 
         return (changedRows == 1) ? new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
-    
+
 
 }
