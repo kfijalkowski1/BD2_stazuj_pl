@@ -1,20 +1,15 @@
 package com.stazuj_pl;
 
-import com.stazuj_pl.DBException;
-import com.stazuj_pl.EntityObj;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.io.Console;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.sql.SQLException;
+import java.util.*;
 
 
 @Repository
@@ -26,6 +21,7 @@ public abstract class CrudHandler {
     protected String tableName;
     protected String tableMainKey;
     protected Object rowMapper;
+    protected List<String> modifiableKeys;
 
     public List<EntityObj> getAll() {
         String sql = String.format("SELECT * FROM %s", tableName);
@@ -52,5 +48,22 @@ public abstract class CrudHandler {
 
     public abstract ResponseEntity<HttpStatus> addEntity(EntityObj e);
 
-    public abstract ResponseEntity<HttpStatus> modifyEntity(Map<String, Object> data);
+    public ResponseEntity<HttpStatus> modifyEntity(Map<String, Object> data) {
+        try {
+            int affected = -1;
+            for (String key : modifiableKeys) {
+                if (data.keySet().contains(key)) {
+                    String sql = String.format("update %s set %s = ? where %s = ?", tableName, key, tableMainKey);
+                    affected = jdbcTemplate.update(sql, data.get(key).toString());
+                    if (affected != 1) {
+                        break;
+                    }
+                }
+            }
+            return (affected == 1) ?
+                    new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        } catch (DataAccessException e) {
+            return new ResponseEntity<HttpStatus>(HttpStatus.I_AM_A_TEAPOT);
+        }
+    }
 }
