@@ -31,9 +31,6 @@ public abstract class CrudHandler {
     public EntityObj getById(int entity_id) {
         String sql = String.format("SELECT * FROM %s where %s = ?", tableName, tableMainKey);
         List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
-//        if (entityData.size() != 1) {
-//            throw new DBException("Obj id not found in database");
-//        }
         return (entityData.size() != 1) ? null : entityData.get(0);
     }
 

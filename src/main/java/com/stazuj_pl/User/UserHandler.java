@@ -21,6 +21,7 @@ public class UserHandler extends CrudHandler {
         this.tableName = "Users";
         this.tableMainKey = "user_id";
         this.rowMapper = new BeanPropertyRowMapper<>(User.class);
+        this.modifiableKeys = Arrays.asList("name", "surname", "mail", "login", "photo_path", "about_me");
     }
 
     public int getIdByUniqueField(String uniqueFieldValue) {

@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @PostMapping(
-            value = "/getStudentById",
+            value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getUserById(@RequestBody int id) {
@@ -31,20 +31,20 @@ public class StudentController {
     }
 
     @PostMapping(
-        value = "/createStudent",
+        value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createUser(@RequestBody Map<String, Object> data) {
         return userHandler.addEntity(data);
     }
 
-    @DeleteMapping(path="/deleteStudent")
+    @DeleteMapping(path="/delete")
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
         return userHandler.deleteById(id);
     }
 
     @PostMapping(
-            value = "/editStudent",
+            value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {

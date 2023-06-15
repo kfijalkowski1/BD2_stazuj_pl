@@ -23,7 +23,7 @@ public class InternshipAdController {
     }
 
     @PostMapping(
-            value = "/getAdById",
+            value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getAdById(@RequestBody int id) {
@@ -31,7 +31,7 @@ public class InternshipAdController {
     }
 
     @PostMapping(
-        value = "/createAd",
+        value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createAd(@RequestBody InternshipAd ad) {
@@ -44,7 +44,7 @@ public class InternshipAdController {
     }
 
     @PostMapping(
-            value = "/editAd",
+            value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editAd(@RequestBody Map<String, Object> data) {

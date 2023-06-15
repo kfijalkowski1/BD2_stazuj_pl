@@ -23,7 +23,7 @@ public class AddressesController {
     }
 
     @PostMapping(
-            value = "/getAddressById",
+            value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getAdById(@RequestBody int id) {
@@ -31,20 +31,20 @@ public class AddressesController {
     }
 
     @PostMapping(
-        value = "/createAddress",
+        value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createAd(@RequestBody Addresses ad) {
         return addressesHandler.addEntity(ad);
     }
 
-    @DeleteMapping(path = "/deleteAddressById")
+    @DeleteMapping(path = "/deleteById")
     public ResponseEntity<HttpStatus> deleteAddress(@RequestBody int id) {
         return addressesHandler.deleteById(id);
     }
 
     @PostMapping(
-            value = "/editAddress",
+            value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editAddress(@RequestBody Map<String, Object> data) {

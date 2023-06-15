@@ -23,7 +23,7 @@ public class CommentsController {
     }
 
     @PostMapping(
-            value = "/getCommentById",
+            value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getCommentById(@RequestBody int id) {
@@ -31,7 +31,7 @@ public class CommentsController {
     }
 
     @PostMapping(
-        value = "/createComment",
+        value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createComment(@RequestBody Comments ad) {
@@ -44,7 +44,7 @@ public class CommentsController {
     }
 
     @PostMapping(
-            value = "/editComment",
+            value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editComment(@RequestBody Map<String, Object> data) {
