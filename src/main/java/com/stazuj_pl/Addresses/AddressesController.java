@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/addresses")
+@RequestMapping(path="/address")
 public class AddressesController {
     @Autowired
     AddressesHandler addressesHandler;
 
     @GetMapping(path="/getAll")
-    public List<EntityObj> getAllAdresses() {
+    public List<EntityObj> getAllAddresses() {
         return addressesHandler.getAll();
     }
 
@@ -38,7 +38,7 @@ public class AddressesController {
         return addressesHandler.addEntity(ad);
     }
 
-    @DeleteMapping(path = "/deleteById")
+    @DeleteMapping(path = "/deleteAddressById")
     public ResponseEntity<HttpStatus> deleteAddress(@RequestBody int id) {
         return addressesHandler.deleteById(id);
     }

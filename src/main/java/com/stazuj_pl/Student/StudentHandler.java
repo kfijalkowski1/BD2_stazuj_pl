@@ -1,10 +1,10 @@
-package com.stazuj_pl.student;
+package com.stazuj_pl.Student;
 
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
-import com.stazuj_pl.user.User;
-import com.stazuj_pl.user.UserHandler;
+import com.stazuj_pl.User.User;
+import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

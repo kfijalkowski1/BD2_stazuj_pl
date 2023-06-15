@@ -1,4 +1,4 @@
-package com.stazuj_pl.student;
+package com.stazuj_pl.Student;
 
 import com.stazuj_pl.EntityObj;
 

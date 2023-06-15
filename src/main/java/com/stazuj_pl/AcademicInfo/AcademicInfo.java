@@ -1,4 +1,4 @@
-package com.stazuj_pl.academicInfo;
+package com.stazuj_pl.AcademicInfo;
 
 import com.stazuj_pl.EntityObj;
 
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Student")
+@Table(name = "AcademicInfo")
 public class AcademicInfo extends EntityObj {
     // pola z DB
     @Id

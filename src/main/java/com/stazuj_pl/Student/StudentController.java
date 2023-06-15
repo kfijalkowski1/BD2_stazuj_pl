@@ -1,4 +1,4 @@
-package com.stazuj_pl.address;
+package com.stazuj_pl.Student;
 
 
 import com.stazuj_pl.EntityObj;
@@ -12,42 +12,42 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/address")
-public class AddressController {
+@RequestMapping(path="/student")
+public class StudentController {
     @Autowired
-    AddressHandler addressHandler;
+    StudentHandler userHandler;
 
     @GetMapping(path="/getAll")
-    public List<EntityObj> getAllAddresses() {
-        return addressHandler.getAll();
+    public List<EntityObj> getAllUsers() {
+        return userHandler.getAll();
     }
 
     @PostMapping(
-            value = "/getAddressById",
+            value = "/getStudentById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public EntityObj getAddressById(@RequestBody int id) {
-        return addressHandler.getById(id);
+    public EntityObj getUserById(@RequestBody int id) {
+        return userHandler.getById(id);
     }
 
     @PostMapping(
-        value = "/createAddress",
+        value = "/createStudent",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> createAddress(@RequestBody Address address) {
-        return addressHandler.addEntity(address);
+    public ResponseEntity<HttpStatus> createUser(@RequestBody Map<String, Object> data) {
+        return userHandler.addEntity(data);
     }
 
-    @DeleteMapping(path="/deleteAddress")
-    public ResponseEntity<HttpStatus> deleteAddress(@RequestBody int id) {
-        return addressHandler.deleteById(id);
+    @DeleteMapping(path="/deleteStudent")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
+        return userHandler.deleteById(id);
     }
 
     @PostMapping(
-            value = "/editAddress",
+            value = "/editStudent",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> editAddress(@RequestBody Map<String, Object> data) {
-        return addressHandler.modifyEntity(data);
+    public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
+        return userHandler.modifyEntity(data);
     }
 }

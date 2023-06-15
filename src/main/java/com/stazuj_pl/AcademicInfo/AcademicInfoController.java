@@ -1,4 +1,4 @@
-package com.stazuj_pl.academicInfo;
+package com.stazuj_pl.AcademicInfo;
 
 
 import com.stazuj_pl.EntityObj;

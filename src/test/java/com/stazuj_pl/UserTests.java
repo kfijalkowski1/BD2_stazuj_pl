@@ -1,14 +1,11 @@
 package com.stazuj_pl;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.stazuj_pl.user.*;
+import com.stazuj_pl.User.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

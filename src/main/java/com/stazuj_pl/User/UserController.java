@@ -1,4 +1,4 @@
-package com.stazuj_pl.user;
+package com.stazuj_pl.User;
 
 
 import com.stazuj_pl.EntityObj;
