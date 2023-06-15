@@ -1,12 +1,13 @@
 package com.stazuj_pl.user;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import com.stazuj_pl.EntityObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.net.URI;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,13 +18,16 @@ public class UserController {
     UserHandler userHandler;
 
     @GetMapping(path="/getAll")
-    public List<User> getAllUsers() {
-        return userHandler.getAllUsers();
+    public List<EntityObj> getAllUsers() {
+        return userHandler.getAll();
     }
 
-    @GetMapping(path="/getUserById/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userHandler.getUserById(id);
+    @PostMapping(
+            value = "/getUserById",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public EntityObj getUserById(@PathVariable User user) {
+        return userHandler.getById(user.getUser_id());
     }
 
     @PostMapping(
@@ -31,12 +35,12 @@ public class UserController {
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
-        return userHandler.createUser(user);
+        return userHandler.addEntity(user);
     }
 
     @DeleteMapping(path="deleteUser/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
-        return userHandler.deleteUser(id);
+        return userHandler.deleteById(id);
     }
 
     @PostMapping(
@@ -44,6 +48,6 @@ public class UserController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
-        return userHandler.setUserField(data);
+        return userHandler.modifyEntity(data);
     }
 }

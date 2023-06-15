@@ -1,4 +1,4 @@
 package com.stazuj_pl;
 
-public interface EntityObj {
+public class EntityObj {
 }
