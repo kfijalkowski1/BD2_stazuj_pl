@@ -3,6 +3,8 @@ package com.stazuj_pl.Student;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.Files.Files;
+import com.stazuj_pl.Files.FilesHandler;
 import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
 import com.stazuj_pl.TaggedOffers.TaggedOffers;
 import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
@@ -30,6 +32,8 @@ public class StudentHandler extends CrudHandler {
     UserHandler userHandler;
     @Autowired
     TaggedOffersHandler taggedOffersHandler;
+    @Autowired
+    FilesHandler filesHandler;
 
     StudentHandler() {
         this.tableName = "Students";
@@ -54,6 +58,19 @@ public class StudentHandler extends CrudHandler {
             }
         }
         return listOfOffersId;
+    }
+
+    public List<Integer> getFiles(int id) {
+        List<EntityObj> listOfFiles = filesHandler.getAll();
+        List<Integer> listOfFilesId = new ArrayList<>(List.of());
+
+        for(EntityObj obj : listOfFiles) {
+            Files file = (Files) obj;
+            if(file.getUser_id() == id) {
+                listOfFilesId.add(file.getFile_id());
+            }
+        }
+        return listOfFilesId;
     }
 
     @Override
