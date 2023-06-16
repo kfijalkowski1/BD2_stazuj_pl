@@ -1,4 +1,4 @@
-package com.stazuj_pl.Addresses;
+package com.stazuj_pl.Files;
 
 
 import com.stazuj_pl.EntityObj;
@@ -12,42 +12,42 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/addresses")
-public class AddressesController {
+@RequestMapping(path="/files")
+public class FilesController {
     @Autowired
-    AddressesHandler addressesHandler;
+    FilesHandler filesHandler;
 
     @GetMapping(path="/getAll")
-    public List<EntityObj> getAllAddresses() {
-        return addressesHandler.getAll();
+    public List<EntityObj> getAllFiles() {
+        return filesHandler.getAll();
     }
 
     @PostMapping(
             value = "/getById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public EntityObj getAdById(@RequestBody int id) {
-        return addressesHandler.getById(id);
+    public EntityObj getFileById(@RequestBody int id) {
+        return filesHandler.getById(id);
     }
 
     @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> createAd(@RequestBody Addresses ad) {
-        return addressesHandler.addEntity(ad);
+    public ResponseEntity<HttpStatus> createFile(@RequestBody Files file) {
+        return filesHandler.addEntity(file);
     }
 
     @DeleteMapping(path = "/deleteById")
-    public ResponseEntity<HttpStatus> deleteAddress(@RequestBody int id) {
-        return addressesHandler.deleteById(id);
+    public ResponseEntity<HttpStatus> deleteFile(@RequestBody int id) {
+        return filesHandler.deleteById(id);
     }
 
     @PostMapping(
             value = "/edit",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> editAddress(@RequestBody Map<String, Object> data) {
-        return addressesHandler.modifyEntity(data);
+    public ResponseEntity<HttpStatus> editFile(@RequestBody Map<String, Object> data) {
+        return filesHandler.modifyEntity(data);
     }
 }

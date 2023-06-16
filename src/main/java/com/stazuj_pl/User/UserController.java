@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/user")
+@RequestMapping(path="/users")
 public class UserController {
     @Autowired
     UserHandler userHandler;

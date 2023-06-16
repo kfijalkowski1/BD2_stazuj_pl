@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/student")
+@RequestMapping(path="/students")
 public class StudentController {
     @Autowired
     StudentHandler userHandler;

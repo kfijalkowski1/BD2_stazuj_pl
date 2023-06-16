@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/post")
+@RequestMapping(path="/posts")
 public class PostsController {
     @Autowired
     PostsHandler postsHandler;
