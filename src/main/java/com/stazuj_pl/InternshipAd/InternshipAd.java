@@ -26,7 +26,7 @@ public class InternshipAd extends EntityObj {
     private int address_id;
     private int user_id; //employee_id
     private String expiration_date;
-    private int duration;
+    private String duration;
 
     // Constructors, getters, and setters automatic generate
 
@@ -125,11 +125,11 @@ public class InternshipAd extends EntityObj {
         this.expiration_date = expiration_date;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
