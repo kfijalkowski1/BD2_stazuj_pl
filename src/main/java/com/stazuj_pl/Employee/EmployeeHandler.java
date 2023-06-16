@@ -46,7 +46,6 @@ public class EmployeeHandler extends CrudHandler {
     }
 
     public List<Integer> getTaggedCandidatesById(int id) {
-        String sql = "select * from TaggedCandidates where user_id_employee = ?";
         List<EntityObj> listOfTaggedCandidates = taggedCandidatesHandler.getAll();
         List<Integer> listOfCandidatesId = new ArrayList<>(List.of());
 

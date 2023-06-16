@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +16,11 @@ import java.util.Map;
 @RequestMapping(path="/students")
 public class StudentController {
     @Autowired
-    StudentHandler userHandler;
+    StudentHandler studentHandler;
 
     @GetMapping(path="/getAll")
     public List<EntityObj> getAllUsers() {
-        return userHandler.getAll();
+        return studentHandler.getAll();
     }
 
     @PostMapping(
@@ -27,7 +28,15 @@ public class StudentController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getUserById(@RequestBody int id) {
-        return userHandler.getById(id);
+        return studentHandler.getById(id);
+    }
+
+    @PostMapping(
+            value = "/getTaggedOffersById",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getTaggedOffersById(@RequestBody int id) {
+        return studentHandler.getTaggedOffersById(id);
     }
 
     @PostMapping(
@@ -35,12 +44,12 @@ public class StudentController {
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> createUser(@RequestBody Map<String, Object> data) {
-        return userHandler.addEntity(data);
+        return studentHandler.addEntity(data);
     }
 
     @DeleteMapping(path="/deleteById")
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
-        return userHandler.deleteById(id);
+        return studentHandler.deleteById(id);
     }
 
     @PostMapping(
@@ -48,6 +57,6 @@ public class StudentController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
-        return userHandler.modifyEntity(data);
+        return studentHandler.modifyEntity(data);
     }
 }

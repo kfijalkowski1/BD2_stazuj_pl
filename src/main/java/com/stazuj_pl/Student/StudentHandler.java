@@ -3,6 +3,9 @@ package com.stazuj_pl.Student;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
+import com.stazuj_pl.TaggedOffers.TaggedOffers;
+import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
 import com.stazuj_pl.User.User;
 import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,8 @@ public class StudentHandler extends CrudHandler {
     JdbcTemplate jdbcTemplate;
     @Autowired
     UserHandler userHandler;
+    @Autowired
+    TaggedOffersHandler taggedOffersHandler;
 
     StudentHandler() {
         this.tableName = "Students";
@@ -35,6 +41,19 @@ public class StudentHandler extends CrudHandler {
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    public List<Integer> getTaggedOffersById(int id) {
+        List<EntityObj> listOfTaggedOffers = taggedOffersHandler.getAll();
+        List<Integer> listOfOffersId = new ArrayList<>(List.of());
+
+        for(EntityObj obj : listOfTaggedOffers) {
+            TaggedOffers taggedOffers = (TaggedOffers) obj;
+            if(taggedOffers.getUser_id() == id) {
+                listOfOffersId.add(taggedOffers.getTagged_offer_id());
+            }
+        }
+        return listOfOffersId;
     }
 
     public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
