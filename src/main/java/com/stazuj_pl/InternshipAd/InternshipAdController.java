@@ -1,4 +1,4 @@
-package com.stazuj_pl.user;
+package com.stazuj_pl.InternshipAd;
 
 
 import com.stazuj_pl.EntityObj;
@@ -12,42 +12,42 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/user")
-public class UserController {
+@RequestMapping(path="/internshipAd")
+public class InternshipAdController {
     @Autowired
-    UserHandler userHandler;
+    InternshipAdHandler InternshipAdHandler;
 
     @GetMapping(path="/getAll")
-    public List<EntityObj> getAllUsers() {
-        return userHandler.getAll();
+    public List<EntityObj> getAllAds() {
+        return InternshipAdHandler.getAll();
     }
 
     @PostMapping(
-            value = "/getUserById",
+            value = "/getAdById",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public EntityObj getUserById(@RequestBody int id) {
-        return userHandler.getById(id);
+    public EntityObj getAdById(@RequestBody int id) {
+        return InternshipAdHandler.getById(id);
     }
 
     @PostMapping(
-        value = "/createUser",
+        value = "/createAd",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
-        return userHandler.addEntity(user);
+    public ResponseEntity<HttpStatus> createAd(@RequestBody InternshipAd ad) {
+        return InternshipAdHandler.addEntity(ad);
     }
 
-    @DeleteMapping(path="/deleteUser")
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody int id) {
-        return userHandler.deleteById(id);
+    @DeleteMapping(path = "/deleteById")
+    public ResponseEntity<HttpStatus> deleteAd(@RequestBody int id) {
+        return InternshipAdHandler.deleteById(id);
     }
 
     @PostMapping(
-            value = "/editUser",
+            value = "/editAd",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<HttpStatus> editUser(@RequestBody Map<String, Object> data) {
-        return userHandler.modifyEntity(data);
+    public ResponseEntity<HttpStatus> editAd(@RequestBody Map<String, Object> data) {
+        return InternshipAdHandler.modifyEntity(data);
     }
 }
