@@ -1,13 +1,18 @@
 package com.stazuj_pl.Employee;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.InternshipAd.InternshipAd;
+import com.stazuj_pl.InternshipAd.InternshipAdHandler;
 import com.stazuj_pl.Student.Student;
 import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
 import com.stazuj_pl.TaggedCandidates.TaggedCandidatesHandler;
 import com.stazuj_pl.TaggedOffers.TaggedOffers;
 import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
+import com.stazuj_pl.TransactionData.TransactionData;
+import com.stazuj_pl.TransactionData.TransactionDataHandler;
 import com.stazuj_pl.User.User;
 import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +35,12 @@ public class EmployeeHandler extends CrudHandler {
     JdbcTemplate jdbcTemplate;
     @Autowired
     UserHandler userHandler;
-
     @Autowired
     TaggedCandidatesHandler taggedCandidatesHandler;
+    @Autowired
+    TransactionDataHandler transactionDataHandler;
+    @Autowired
+    InternshipAdHandler internshipAdHandler;
 
     EmployeeHandler() {
         this.tableName = "Employees";
@@ -57,6 +65,32 @@ public class EmployeeHandler extends CrudHandler {
             return new ResponseEntity<HttpStatus>(HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
+
+    public List<Integer> getTransactionDataForAd(Map<String, Integer> data) {
+
+        List<Integer> listOfTransactionDataId = new ArrayList<>(List.of());
+        List<EntityObj> listOfTransactionData = transactionDataHandler.getAll();
+        for (EntityObj obj : listOfTransactionData) {
+            TransactionData transactionData = (TransactionData) obj;
+            EntityObj adObj = internshipAdHandler.getById(transactionData.getInternship_ad_id());
+            InternshipAd ad = (InternshipAd) adObj;
+
+            boolean condition;
+
+            if(data.containsKey("internship_ad_id")) {
+                condition = ad.getUser_id() == Integer.parseInt(data.get("user_id").toString()) && ad.getInternship_ad_id() == Integer.parseInt(data.get("internship_ad_id").toString());
+            }
+            else {
+                condition = ad.getUser_id() == Integer.parseInt(data.get("user_id").toString());
+            }
+
+            if (condition) {
+                listOfTransactionDataId.add(transactionData.getTransaction_data_id());
+            }
+
+        }
+        return listOfTransactionDataId;
     }
     @Override
     public EntityObj getById(int entity_id) {

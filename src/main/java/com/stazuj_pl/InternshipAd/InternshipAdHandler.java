@@ -23,8 +23,6 @@ public class InternshipAdHandler extends CrudHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    @Autowired
-    EmployeeHandler employeeHandler;
 
     InternshipAdHandler() {
         this.tableName = "InternshipAds";
