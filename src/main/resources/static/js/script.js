@@ -2,6 +2,7 @@ async function createTableFromJSON(whatToGet) {
     let response = await fetch('http://localhost:8000/' + whatToGet);
     let jsonData = await response.json();
 
+    console.log(jsonData);
     let container = $("#container");
 
     let table = $("<table>");
@@ -23,7 +24,12 @@ async function createTableFromJSON(whatToGet) {
         let tr = $("<tr>");
         let vals = Object.values(item);
 
+        console.log(vals);
+
         $.each(vals, (i, elem) => {
+            if (elem == null) {
+                elem = "";
+            }
             let td = $("<td>");
             td.text(elem);
             tr.append(td);
