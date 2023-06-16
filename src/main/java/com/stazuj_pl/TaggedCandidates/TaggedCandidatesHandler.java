@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class TaggedCandidatesHandler extends CrudHandler {
@@ -22,17 +23,17 @@ public class TaggedCandidatesHandler extends CrudHandler {
         this.tableName = "TaggedCandidates";
         this.tableMainKey = "tagged_candidate_id";
         this.rowMapper = new BeanPropertyRowMapper<>(TaggedCandidates.class);
-        this.modifiableKeys = Arrays.asList("rating");
+        this.modifiableKeys = List.of("rating");
     }
 
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
             TaggedCandidates cmt = (TaggedCandidates) e;
-            String sql = String.format("INSERT INTO %s (rating, employee_id, intenship_ad_id, student_id) " +
+            String sql = String.format("INSERT INTO %s (rating, user_id_employee, internship_ad_id, user_id_student) " +
                     "VALUES (?, ?, ?, ?)", tableName);
-            int changedRows = jdbcTemplate.update(sql, cmt.getRating(), cmt.getEmployee_id(),
-                    cmt.getIntenship_ad_id(), cmt.getStudent_id());
+            int changedRows = jdbcTemplate.update(sql, cmt.getRating(), cmt.getUser_id_employee(),
+                    cmt.getInternship_ad_id(), cmt.getUser_id_student());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {

@@ -29,9 +29,9 @@ public class FilesHandler extends CrudHandler {
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
             Files file = (Files) e;
-            String sql = String.format("INSERT INTO %s (student_id, file_path, is_main_cv, file_type) " +
+            String sql = String.format("INSERT INTO %s (user_id, file_path, is_main_cv, file_type) " +
                     "VALUES (?, ?, ?, ?)", tableName);
-            int changedRows = jdbcTemplate.update(sql, file.getStudent_id(), file.getFile_path(), file.getIs_main_cv(), file.getFile_type());
+            int changedRows = jdbcTemplate.update(sql, file.getUser_id(), file.getFile_path(), file.getIs_main_cv(), file.getFile_type());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {

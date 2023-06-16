@@ -13,7 +13,7 @@ public class InternshipAd extends EntityObj {
 
     // pola z DB
     @Id
-    private int intenship_ad_id;
+    private int internship_ad_id;
 
     private String internship_description;
     private String publication_date;
@@ -24,18 +24,25 @@ public class InternshipAd extends EntityObj {
     private String work_type;
     private String keywords;
     private int address_id;
-    private int employee_id;
+    private int user_id; //employee_id
     private String expiration_date;
     private int duration;
 
-
     // Constructors, getters, and setters automatic generate
-    public int getIntenship_ad_id() {
-        return intenship_ad_id;
+
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setIntenship_ad_id(int intenship_ad_id) {
-        this.intenship_ad_id = intenship_ad_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+    public int getInternship_ad_id() {
+        return internship_ad_id;
+    }
+
+    public void setInternship_ad_id(int internship_ad_id) {
+        this.internship_ad_id = internship_ad_id;
     }
 
     public String getInternship_description() {
@@ -108,14 +115,6 @@ public class InternshipAd extends EntityObj {
 
     public void setAddress_id(int address_id) {
         this.address_id = address_id;
-    }
-
-    public int getEmployee_id() {
-        return employee_id;
-    }
-
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
     }
 
     public String getExpiration_date() {

@@ -30,8 +30,8 @@ public class TaggedOffersHandler extends CrudHandler {
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
             TaggedOffers taggedOffer = (TaggedOffers) e;
-            String sql = String.format("INSERT INTO %s (internship_ad_id, student_id) VALUES (?, ?)", tableName);
-            int changedRows = jdbcTemplate.update(sql, taggedOffer.getInternship_ad_id(), taggedOffer.getStudent_id());
+            String sql = String.format("INSERT INTO %s (internship_ad_id, user_id) VALUES (?, ?)", tableName);
+            int changedRows = jdbcTemplate.update(sql, taggedOffer.getInternship_ad_id(), taggedOffer.getUser_id());
             return (changedRows == 1) ?
                     new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         } catch (DataAccessException er) {
