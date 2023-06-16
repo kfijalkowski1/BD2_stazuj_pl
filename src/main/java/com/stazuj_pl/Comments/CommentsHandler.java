@@ -3,6 +3,7 @@ package com.stazuj_pl.Comments;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.TransactionData.TransactionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 @Repository
 public class CommentsHandler extends CrudHandler {
@@ -26,6 +25,21 @@ public class CommentsHandler extends CrudHandler {
         this.tableMainKey = "comment_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Comments.class);
         this.modifiableKeys = Arrays.asList("content");
+    }
+
+    public List<Integer> getCommentsOnPost(int id) {
+        List<Integer> listOfCommentsId = new ArrayList<>(List.of());
+        List<EntityObj> listOfComments = getAll();
+
+        for (EntityObj obj : listOfComments) {
+            Comments comment = (Comments) obj;
+
+            if(comment.getPost_id() == id) {
+                listOfCommentsId.add(comment.getComment_id());
+            }
+
+        }
+        return listOfCommentsId;
     }
 
     @Override

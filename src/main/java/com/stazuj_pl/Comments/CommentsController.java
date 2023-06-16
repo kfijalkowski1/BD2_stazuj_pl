@@ -31,6 +31,14 @@ public class CommentsController {
     }
 
     @PostMapping(
+            value = "/getCommentsOnPost",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getCommentsOnPost(@RequestBody int id) {
+        return commentsHandler.getCommentsOnPost(id);
+    }
+
+    @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
