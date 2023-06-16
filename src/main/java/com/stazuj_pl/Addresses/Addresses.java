@@ -16,7 +16,7 @@ public class Addresses extends EntityObj {
     private String country_name;
     private String street_name;
     private String postal_code;
-    private int house_nr;
+    private String house_nr;
 
     public int getAddress_Id() {
         return address_Id;
@@ -50,11 +50,11 @@ public class Addresses extends EntityObj {
         this.postal_code = postal_code;
     }
 
-    public int getHouse_nr() {
+    public String getHouse_nr() {
         return house_nr;
     }
 
-    public void setHouse_nr(int house_nr) {
+    public void setHouse_nr(String house_nr) {
         this.house_nr = house_nr;
     }
 

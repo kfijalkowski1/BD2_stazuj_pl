@@ -14,7 +14,7 @@ public class Employee extends EntityObj {
     private int employee_id;
     private int company_id;
     private int user_employee_id;
-    private int search_number;
+    private String search_number;
     private String plan_type;
     private String message_template;
 
@@ -42,11 +42,11 @@ public class Employee extends EntityObj {
         this.user_employee_id = user_employee_id;
     }
 
-    public int getSearch_number() {
+    public String getSearch_number() {
         return search_number;
     }
 
-    public void setSearch_number(int search_number) {
+    public void setSearch_number(String search_number) {
         this.search_number = search_number;
     }
 

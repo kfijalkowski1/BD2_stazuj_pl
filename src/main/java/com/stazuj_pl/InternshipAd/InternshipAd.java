@@ -18,8 +18,8 @@ public class InternshipAd extends EntityObj {
     private String internship_description;
     private String publication_date;
     private String position_type;
-    private int salary_min;
-    private int salary_max;
+    private String salary_min;
+    private String salary_max;
     private String employment_type;
     private String work_type;
     private String keywords;
@@ -62,19 +62,19 @@ public class InternshipAd extends EntityObj {
         this.position_type = position_type;
     }
 
-    public int getSalary_min() {
+    public String getSalary_min() {
         return salary_min;
     }
 
-    public void setSalary_min(int salary_min) {
+    public void setSalary_min(String salary_min) {
         this.salary_min = salary_min;
     }
 
-    public int getSalary_max() {
+    public String getSalary_max() {
         return salary_max;
     }
 
-    public void setSalary_max(int salary_max) {
+    public void setSalary_max(String salary_max) {
         this.salary_max = salary_max;
     }
 

@@ -14,9 +14,9 @@ public class Student extends EntityObj {
     private int student_id;
 
     private int user_student_id;
-    private int academic_info_id;
-    private int academic_year;
-    private int looking_for_job;
+    private String academic_info_id;
+    private String academic_year;
+    private String looking_for_job;
     private String keywords;
 
     public int getStudent_id() {
@@ -35,27 +35,27 @@ public class Student extends EntityObj {
         this.user_student_id = user_student_id;
     }
 
-    public int getAcademic_info_id() {
+    public String getAcademic_info_id() {
         return academic_info_id;
     }
 
-    public void setAcademic_info_id(int academic_info_id) {
+    public void setAcademic_info_id(String academic_info_id) {
         this.academic_info_id = academic_info_id;
     }
 
-    public int getAcademic_year() {
+    public String getAcademic_year() {
         return academic_year;
     }
 
-    public void setAcademic_year(int academic_year) {
+    public void setAcademic_year(String academic_year) {
         this.academic_year = academic_year;
     }
 
-    public int getLooking_for_job() {
+    public String getLooking_for_job() {
         return looking_for_job;
     }
 
-    public void setLooking_for_job(int looking_for_job) {
+    public void setLooking_for_job(String looking_for_job) {
         this.looking_for_job = looking_for_job;
     }
 

@@ -4,6 +4,7 @@ package com.stazuj_pl.InternshipAd;
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -29,7 +30,8 @@ public class InternshipAdHandler extends CrudHandler {
 
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
-        InternshipAd ad = (InternshipAd) e;
+        try {
+            InternshipAd ad = (InternshipAd) e;
         String sql = String.format("INSERT INTO %s (internship_description, publication_date, position_type, " +
                 "salary_min, salary_max, employment_type, work_type, keywords, address_id, employee_id, expiration_date, duration) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", tableName);
@@ -39,6 +41,10 @@ public class InternshipAdHandler extends CrudHandler {
                 ad.getEmployee_id(), ad.getExpiration_date(), ad.getDuration());
         return (changedRows == 1) ?
                 new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        } catch (
+        DataAccessException er) {
+            return new ResponseEntity<HttpStatus>(HttpStatus.I_AM_A_TEAPOT);
+        }
     }
 
 

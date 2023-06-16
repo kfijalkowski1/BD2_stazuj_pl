@@ -14,7 +14,7 @@ public class Files extends EntityObj {
     @Id
     private int file_id;
     private int student_id;
-    private int is_main_cv;
+    private String is_main_cv;
     private String file_path;
     private String file_type;
 
@@ -34,11 +34,11 @@ public class Files extends EntityObj {
         this.student_id = student_id;
     }
 
-    public int getIs_main_cv() {
+    public String getIs_main_cv() {
         return is_main_cv;
     }
 
-    public void setIs_main_cv(int is_main_cv) {
+    public void setIs_main_cv(String is_main_cv) {
         this.is_main_cv = is_main_cv;
     }
 
