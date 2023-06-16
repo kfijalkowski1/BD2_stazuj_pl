@@ -1,6 +1,7 @@
 package com.stazuj_pl;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
 
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 
@@ -22,6 +27,7 @@ public abstract class CrudHandler {
     protected String tableMainKey;
     protected Object rowMapper;
     protected List<String> modifiableKeys;
+    private List<String> statsCountSearches = Arrays.asList("Users", "Companies", "InternshipAds", "Posts");
 
     public List<EntityObj> getAll() {
         String sql = String.format("SELECT * FROM %s", tableName);
@@ -30,6 +36,9 @@ public abstract class CrudHandler {
 
     public EntityObj getById(int entity_id) {
         String sql = String.format("SELECT * FROM %s where %s = ?", tableName, tableMainKey);
+        if (statsCountSearches.contains(tableName)) {
+            updateStats(tableName, "views", entity_id);
+        }
         List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
         return (entityData.size() != 1) ? null : entityData.get(0);
     }
@@ -64,4 +73,19 @@ public abstract class CrudHandler {
             return new ResponseEntity<HttpStatus>(HttpStatus.I_AM_A_TEAPOT);
         }
     }
+
+        private void updateStats(String table_name, String type, int id) {
+        List<SqlParameter> parameters = Arrays.asList(new SqlParameter(Types.VARCHAR));
+        jdbcTemplate.call(new CallableStatementCreator() {
+            @Override
+            public CallableStatement createCallableStatement(Connection con) throws SQLException {
+                CallableStatement cs = con.prepareCall("{call updateStatistics(?, ?, ?)}");
+                cs.setString(1, table_name);
+                cs.setString(2, type);
+                cs.setInt(3, id);
+                return cs;
+            }
+        }, parameters);
+    }
+
 }
