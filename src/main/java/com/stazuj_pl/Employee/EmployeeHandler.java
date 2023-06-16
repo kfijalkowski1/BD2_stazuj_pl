@@ -3,6 +3,11 @@ package com.stazuj_pl.Employee;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.Student.Student;
+import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
+import com.stazuj_pl.TaggedCandidates.TaggedCandidatesHandler;
+import com.stazuj_pl.TaggedOffers.TaggedOffers;
+import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
 import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -12,6 +17,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +30,9 @@ public class EmployeeHandler extends CrudHandler {
     @Autowired
     UserHandler userHandler;
 
+    @Autowired
+    TaggedCandidatesHandler taggedCandidatesHandler;
+
     EmployeeHandler() {
         this.tableName = "Employees";
         this.tableMainKey = "employee_id";
@@ -34,6 +43,20 @@ public class EmployeeHandler extends CrudHandler {
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    public List<Integer> getTaggedCandidatesById(int id) {
+        String sql = "select * from TaggedCandidates where user_id_employee = ?";
+        List<EntityObj> listOfTaggedCandidates = taggedCandidatesHandler.getAll();
+        List<Integer> listOfCandidatesId = new ArrayList<>(List.of());
+
+        for(EntityObj obj : listOfTaggedCandidates) {
+            TaggedCandidates taggedCandidates = (TaggedCandidates) obj;
+            if(taggedCandidates.getUser_id_employee().equals(Integer.toString(id))) {
+                listOfCandidatesId.add(Integer.parseInt(taggedCandidates.getUser_id_student()));
+            }
+        }
+        return listOfCandidatesId;
     }
 
     public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
