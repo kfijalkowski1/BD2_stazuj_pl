@@ -31,9 +31,23 @@ public class UserHandler extends CrudHandler {
     }
 
     public int getIdByUniqueField(String uniqueFieldValue) {
-        String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
-        List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
-        return user.get(0).getUser_id();
+        Boolean exists = false;
+        List<EntityObj> userObj = getAll();
+        for(EntityObj obj : userObj) {
+            User user = (User) obj;
+            if(user.getLogin().equals(uniqueFieldValue)) {
+                exists = true;
+                break;
+            }
+        }
+        if(exists) {
+            String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
+            List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
+            return user.get(0).getUser_id();
+        }
+        else {
+            return -1;
+        }
     }
 
     public List<Integer> getConversation(Map<String, Integer> data) {
@@ -50,6 +64,20 @@ public class UserHandler extends CrudHandler {
 
         return listOfMessagesId;
     }
+
+
+    public int login(Map<String, String> data) {
+        int id = getIdByUniqueField(data.get("login"));
+        if(id != -1) {
+            EntityObj userObj = getById(id);
+            User user = (User) userObj;
+            return user.getHash_password().equals(data.get("password")) ? id : -1;
+        }
+        else {
+            return -1;
+        }
+    }
+
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         User user = (User) e;
