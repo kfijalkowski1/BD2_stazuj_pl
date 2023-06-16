@@ -3,6 +3,8 @@ package com.stazuj_pl.User;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.Messages.Messages;
+import com.stazuj_pl.Messages.MessagesHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ public class UserHandler extends CrudHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    MessagesHandler messagesHandler;
 
 
     UserHandler() {
@@ -32,6 +36,20 @@ public class UserHandler extends CrudHandler {
         return user.get(0).getUser_id();
     }
 
+    public List<Integer> getConversation(Map<String, Integer> data) {
+        List<EntityObj> listObj = messagesHandler.getAll();
+        List<Integer> listOfMessagesId = new ArrayList<>(List.of());
+
+        List<Integer> listOfParticipants = Arrays.asList(data.get("author_id"), data.get("receiver_id"));
+        for(EntityObj obj : listObj) {
+            Messages message = (Messages) obj;
+            if(listOfParticipants.contains(message.getAuthor_id()) && listOfParticipants.contains(message.getReceiver_id())) {
+                listOfMessagesId.add(message.getMessage_id());
+            }
+        }
+
+        return listOfMessagesId;
+    }
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         User user = (User) e;
