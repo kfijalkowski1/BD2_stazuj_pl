@@ -13,10 +13,19 @@ public class Files extends EntityObj {
     // pola z DB
     @Id
     private int file_id;
-    private int student_id;
+
+    private int user_id; //student_id
+
     private String is_main_cv;
     private String file_path;
     private String file_type;
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     public int getFile_id() {
         return file_id;
@@ -26,13 +35,6 @@ public class Files extends EntityObj {
         this.file_id = file_id;
     }
 
-    public int getStudent_id() {
-        return student_id;
-    }
-
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
-    }
 
     public String getIs_main_cv() {
         return is_main_cv;

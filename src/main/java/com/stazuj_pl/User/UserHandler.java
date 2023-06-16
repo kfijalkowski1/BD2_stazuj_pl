@@ -3,6 +3,8 @@ package com.stazuj_pl.User;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.Messages.Messages;
+import com.stazuj_pl.Messages.MessagesHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,10 @@ public class UserHandler extends CrudHandler {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    MessagesHandler messagesHandler;
+
+
     UserHandler() {
         this.tableName = "Users";
         this.tableMainKey = "user_id";
@@ -25,9 +31,51 @@ public class UserHandler extends CrudHandler {
     }
 
     public int getIdByUniqueField(String uniqueFieldValue) {
-        String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
-        List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
-        return user.get(0).getUser_id();
+        Boolean exists = false;
+        List<EntityObj> userObj = getAll();
+        for(EntityObj obj : userObj) {
+            User user = (User) obj;
+            if(user.getLogin().equals(uniqueFieldValue)) {
+                exists = true;
+                break;
+            }
+        }
+        if(exists) {
+            String sql = String.format("select %s from %s where login = ?", tableMainKey, tableName);
+            List<User> user = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, uniqueFieldValue);
+            return user.get(0).getUser_id();
+        }
+        else {
+            return -1;
+        }
+    }
+
+    public List<Integer> getConversation(Map<String, Integer> data) {
+        List<EntityObj> listObj = messagesHandler.getAll();
+        List<Integer> listOfMessagesId = new ArrayList<>(List.of());
+
+        List<Integer> listOfParticipants = Arrays.asList(data.get("author_id"), data.get("receiver_id"));
+        for(EntityObj obj : listObj) {
+            Messages message = (Messages) obj;
+            if(listOfParticipants.contains(message.getAuthor_id()) && listOfParticipants.contains(message.getReceiver_id())) {
+                listOfMessagesId.add(message.getMessage_id());
+            }
+        }
+
+        return listOfMessagesId;
+    }
+
+
+    public int login(Map<String, String> data) {
+        int id = getIdByUniqueField(data.get("login"));
+        if(id != -1) {
+            EntityObj userObj = getById(id);
+            User user = (User) userObj;
+            return user.getHash_password().equals(data.get("password")) ? id : -1;
+        }
+        else {
+            return -1;
+        }
     }
 
     @Override
@@ -47,6 +95,4 @@ public class UserHandler extends CrudHandler {
 
         return (changedRows == 1) ? new ResponseEntity<HttpStatus>(HttpStatus.OK) : new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
-
-
 }

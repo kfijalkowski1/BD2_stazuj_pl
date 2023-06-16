@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,22 @@ public class UserController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public EntityObj getUserById(@RequestBody int id) {
         return userHandler.getById(id);
+    }
+
+    @PostMapping(
+            value = "/getConversation",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getConversation(@RequestBody Map<String, Integer> data) {
+        return userHandler.getConversation(data);
+    }
+
+    @PostMapping(
+            value = "/login",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public int login(@RequestBody Map<String, String> data) {
+        return userHandler.login(data);
     }
 
     @PostMapping(

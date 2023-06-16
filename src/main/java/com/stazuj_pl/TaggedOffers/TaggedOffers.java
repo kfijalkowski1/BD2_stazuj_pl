@@ -14,7 +14,16 @@ public class TaggedOffers extends EntityObj {
     @Id
     private int tagged_offer_id;
     private int internship_ad_id;
-    private int student_id;
+    private int user_id; //student_id;
+
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 
     public int getTagged_offer_id() {
         return tagged_offer_id;
@@ -30,14 +39,6 @@ public class TaggedOffers extends EntityObj {
 
     public void setInternship_ad_id(int internship_ad_id) {
         this.internship_ad_id = internship_ad_id;
-    }
-
-    public int getStudent_id() {
-        return student_id;
-    }
-
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
     }
 }
 

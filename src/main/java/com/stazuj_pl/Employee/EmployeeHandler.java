@@ -3,6 +3,12 @@ package com.stazuj_pl.Employee;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
+import com.stazuj_pl.Student.Student;
+import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
+import com.stazuj_pl.TaggedCandidates.TaggedCandidatesHandler;
+import com.stazuj_pl.TaggedOffers.TaggedOffers;
+import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
+import com.stazuj_pl.User.User;
 import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -12,6 +18,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +31,9 @@ public class EmployeeHandler extends CrudHandler {
     @Autowired
     UserHandler userHandler;
 
+    @Autowired
+    TaggedCandidatesHandler taggedCandidatesHandler;
+
     EmployeeHandler() {
         this.tableName = "Employees";
         this.tableMainKey = "employee_id";
@@ -34,6 +44,38 @@ public class EmployeeHandler extends CrudHandler {
     @Override
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    @Override
+    public ResponseEntity<HttpStatus> deleteById(int entity_id) {
+        EntityObj obj = getById(entity_id);
+        Employee employee = (Employee) obj;
+        int employee_id = employee.getEmployee_id();
+        String delete_employee = String.format("DELETE from %s where %s = ?;", tableName, tableMainKey);
+        int dataAffected = jdbcTemplate.update(delete_employee, employee_id);
+        if (dataAffected != 1) {
+            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
+    @Override
+    public EntityObj getById(int entity_id) {
+        String sql = String.format("SELECT * FROM %s where user_employee_id = ?", tableName, tableMainKey);
+        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
+        return (entityData.size() != 1) ? null : entityData.get(0);
+    }
+
+    public List<Integer> getTaggedCandidatesById(int id) {
+        List<EntityObj> listOfTaggedCandidates = taggedCandidatesHandler.getAll();
+        List<Integer> listOfCandidatesId = new ArrayList<>(List.of());
+
+        for(EntityObj obj : listOfTaggedCandidates) {
+            TaggedCandidates taggedCandidates = (TaggedCandidates) obj;
+            if(taggedCandidates.getUser_id_employee().equals(Integer.toString(id))) {
+                listOfCandidatesId.add(Integer.parseInt(taggedCandidates.getUser_id_student()));
+            }
+        }
+        return listOfCandidatesId;
     }
 
     public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
@@ -48,7 +90,17 @@ public class EmployeeHandler extends CrudHandler {
                 }
             }
 
-            if (!plan_typeEnum.contains(data.get("plan_type"))) {
+            User user = new User();
+            user.setMail(data.get("mail").toString());
+            user.setHash_password(data.get("hash_password").toString());
+            user.setName(data.get("name").toString());
+            user.setSurname(data.get("surname").toString());
+            user.setLogin(data.get("login").toString());
+            user.setPhoto_path(data.get("photo_path").toString());
+            user.setAbout_me(data.get("about_me").toString());
+            userHandler.addEntity(user);
+
+            if (!plan_typeEnum.contains(data.get("plan_type").toString())) {
                 return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
             }
 
@@ -58,23 +110,8 @@ public class EmployeeHandler extends CrudHandler {
                 }
             }
 
-            String sql_user = "INSERT INTO Users (mail, hash_password, name, surname, login, photo_path, about_me) VALUES (?, ?, ?, ?, ?, ?, ?)";
             String sql_employee = "INSERT INTO Employees (user_employee_id, company_id, message_template, search_number, plan_type) VALUES (?, ?, ?, ?, ?)";
 
-            int addUser = jdbcTemplate.update(
-                    sql_user,
-                    data.get("mail").toString(),
-                    data.get("hash_password").toString(),
-                    data.get("name").toString(),
-                    data.get("surname").toString(),
-                    data.get("login").toString(),
-                    data.get("photo_path").toString(),
-                    data.get("about_me").toString()
-            );
-
-            if (addUser != 1) {
-                return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
-            }
             int user_id = userHandler.getIdByUniqueField(data.get("login").toString());
 
             int addEmployee = jdbcTemplate.update(

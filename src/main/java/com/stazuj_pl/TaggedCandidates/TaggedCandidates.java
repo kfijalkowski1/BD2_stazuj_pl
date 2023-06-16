@@ -15,11 +15,10 @@ public class TaggedCandidates extends EntityObj {
     private int tagged_candidate_id;
 
     private String rating;
-    private String employee_id;
-    private String intenship_ad_id;
-    private String student_id;
+    private String internship_ad_id;
+    private String user_id_employee;
+    private String user_id_student;
 
-    // auto generated seters geters
 
     public int getTagged_candidate_id() {
         return tagged_candidate_id;
@@ -37,29 +36,28 @@ public class TaggedCandidates extends EntityObj {
         this.rating = rating;
     }
 
-    public String getEmployee_id() {
-        return employee_id;
+    public String getInternship_ad_id() {
+        return internship_ad_id;
     }
 
-    public void setEmployee_id(String employee_id) {
-        this.employee_id = employee_id;
+    public void setInternship_ad_id(String internship_ad_id) {
+        this.internship_ad_id = internship_ad_id;
     }
 
-    public String getIntenship_ad_id() {
-        return intenship_ad_id;
+    public String getUser_id_employee() {
+        return user_id_employee;
     }
 
-    public void setIntenship_ad_id(String intenship_ad_id) {
-        this.intenship_ad_id = intenship_ad_id;
+    public void setUser_id_employee(String user_id_employee) {
+        this.user_id_employee = user_id_employee;
     }
 
-    public String getStudent_id() {
-        return student_id;
+    public String getUser_id_student() {
+        return user_id_student;
     }
 
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
+    public void setUser_id_student(String user_id_student) {
+        this.user_id_student = user_id_student;
     }
-
 }
 

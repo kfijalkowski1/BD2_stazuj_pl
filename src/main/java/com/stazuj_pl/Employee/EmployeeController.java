@@ -31,6 +31,14 @@ public class EmployeeController {
     }
 
     @PostMapping(
+            value = "/getTaggedCandidatesById",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getTaggedCandidatesById(@RequestBody int id) {
+        return employeeHandler.getTaggedCandidatesById(id);
+    }
+
+    @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
