@@ -56,6 +56,26 @@ public class StudentHandler extends CrudHandler {
         return listOfOffersId;
     }
 
+    @Override
+    public EntityObj getById(int entity_id) {
+        String sql = String.format("SELECT * FROM %s where user_student_id = ?", tableName, tableMainKey);
+        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
+        return (entityData.size() != 1) ? null : entityData.get(0);
+    }
+
+    @Override
+    public ResponseEntity<HttpStatus> deleteById(int entity_id) {
+        EntityObj obj = getById(entity_id);
+        Student student = (Student) obj;
+        int student_id = student.getStudent_id();
+        String delete_student = String.format("DELETE from %s where %s = ?;", tableName, tableMainKey);
+        int dataAffected = jdbcTemplate.update(delete_student, student_id);
+        if (dataAffected != 1) {
+            return new ResponseEntity<HttpStatus>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
+
     public ResponseEntity<HttpStatus> addEntity(Map<String, Object> data) {
         try {
             List<String> obligatoryFields = Arrays.asList("hash_password", "name", "surname", "login", "academic_info_id");
@@ -66,29 +86,25 @@ public class StudentHandler extends CrudHandler {
                     return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
                 }
             }
+
+            User user = new User();
+            user.setMail(data.get("mail").toString());
+            user.setHash_password(data.get("hash_password").toString());
+            user.setName(data.get("name").toString());
+            user.setSurname(data.get("surname").toString());
+            user.setLogin(data.get("login").toString());
+            user.setPhoto_path(data.get("photo_path").toString());
+            user.setAbout_me(data.get("about_me").toString());
+            userHandler.addEntity(user);
+
             for (String key : optionaryFields) {
                 if (!data.containsKey(key)) {
                     data.put(key, null);
                 }
             }
 
-            String sql_user = "INSERT INTO Users (mail, hash_password, name, surname, login, photo_path, about_me) VALUES (?, ?, ?, ?, ?, ?, ?)";
             String sql_student = "INSERT INTO Students (academic_info_id, user_student_id, academic_year, looking_for_job, keywords) VALUES (?, ?, ?, ?, ?)";
 
-            int addUser = jdbcTemplate.update(
-                    sql_user,
-                    data.get("mail").toString(),
-                    data.get("hash_password").toString(),
-                    data.get("name").toString(),
-                    data.get("surname").toString(),
-                    data.get("login").toString(),
-                    data.get("photo_path").toString(),
-                    data.get("about_me").toString()
-            );
-
-            if (addUser != 1) {
-                return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
-            }
             int user_id = userHandler.getIdByUniqueField(data.get("login").toString());
             int addStudent = jdbcTemplate.update(
                     sql_student,
