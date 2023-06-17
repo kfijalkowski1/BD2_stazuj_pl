@@ -39,6 +39,14 @@ public class EmployeeController {
     }
 
     @PostMapping(
+            value = "/getTransactionDataForAd",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getTransactionDataForAd(@RequestBody Map<String, Integer> data) {
+        return employeeHandler.getTransactionDataForAd(data);
+    }
+
+    @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

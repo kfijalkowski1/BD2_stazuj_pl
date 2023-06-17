@@ -3,9 +3,12 @@ package com.stazuj_pl.Student;
 
 import com.stazuj_pl.CrudHandler;
 import com.stazuj_pl.EntityObj;
-import com.stazuj_pl.TaggedCandidates.TaggedCandidates;
+import com.stazuj_pl.Files.Files;
+import com.stazuj_pl.Files.FilesHandler;
 import com.stazuj_pl.TaggedOffers.TaggedOffers;
 import com.stazuj_pl.TaggedOffers.TaggedOffersHandler;
+import com.stazuj_pl.TransactionData.TransactionData;
+import com.stazuj_pl.TransactionData.TransactionDataHandler;
 import com.stazuj_pl.User.User;
 import com.stazuj_pl.User.UserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +34,10 @@ public class StudentHandler extends CrudHandler {
     UserHandler userHandler;
     @Autowired
     TaggedOffersHandler taggedOffersHandler;
+    @Autowired
+    FilesHandler filesHandler;
+    @Autowired
+    TransactionDataHandler transactionDataHandler;
 
     StudentHandler() {
         this.tableName = "Students";
@@ -58,6 +66,34 @@ public class StudentHandler extends CrudHandler {
         return listOfOffersId;
     }
 
+    public List<Integer> getFiles(int id) {
+        List<EntityObj> listOfFiles = filesHandler.getAll();
+        List<Integer> listOfFilesId = new ArrayList<>(List.of());
+
+        for(EntityObj obj : listOfFiles) {
+            Files file = (Files) obj;
+            if(file.getUser_id() == id) {
+                listOfFilesId.add(file.getFile_id());
+            }
+        }
+        return listOfFilesId;
+    }
+
+    public List<Integer> getTransactionData(int id) {
+        List<Integer> listOfTransactionDataId = new ArrayList<>(List.of());
+        List<EntityObj> listOfTransactionData = transactionDataHandler.getAll();
+        List<Integer> listOfFilesId = getFiles(id);
+
+        for (EntityObj obj : listOfTransactionData) {
+            TransactionData transactionData = (TransactionData) obj;
+
+            if(listOfFilesId.contains(transactionData.getCv_id())) {
+                listOfTransactionDataId.add(transactionData.getTransaction_data_id());
+            }
+
+        }
+        return listOfTransactionDataId;
+    }
     @Override
     public EntityObj getById(int entity_id) {
         String sql = String.format("SELECT * FROM %s where user_student_id = ?", safeName, tableMainKey);

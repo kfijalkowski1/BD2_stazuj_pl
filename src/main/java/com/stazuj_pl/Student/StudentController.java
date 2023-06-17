@@ -40,6 +40,22 @@ public class StudentController {
     }
 
     @PostMapping(
+            value = "/getFiles",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getFiles(@RequestBody int id) {
+        return studentHandler.getFiles(id);
+    }
+
+    @PostMapping(
+            value = "/getTransactionData",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Integer> getTransactionData(@RequestBody int id) {
+        return studentHandler.getTransactionData(id);
+    }
+
+    @PostMapping(
         value = "/create",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
