@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
 </head>
 <body>
+<!-- Responsive navbar for admin page-->
+<div th:fragment="navbar-admin">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="#!">Stazuj_pl - admin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Strona główna</a></li>
+                <li class="nav-item"><a class="nav-link" href="offers">Użytkownicy</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+
+<!-- Responsive navbar for normal page-->
+<div th:fragment="navbar-normal">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" href="#!">Stazuj_pl - index</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Strona główna</a></li>
+                <li class="nav-item"><a class="nav-link" href="offers">Oferty</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Forum</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">Wiadomości</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+
+<!-- Footer -->
+<footer th:fragment="footer" class="py-5 bg-dark">
+    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; Stazuj_pl 2023</p></div>
+</footer>
 
 </body>
 </html>
