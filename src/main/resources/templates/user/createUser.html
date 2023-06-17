@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Stażuj_pl</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="fragments :: navbar-admin"></div>
+<div class="container">
+  <form id="add-user-form" method="post" action="http://localhost:8000/user/createUser">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="surname">Surname</label>
+    <input type="text" class="form-control" id="surname" placeholder="surname" name="surname">
+  </div>
+  <div class="form-group">
+    <label for="login">Login</label>
+    <input type="text" class="form-control" id="login" placeholder="login" name="login">
+  </div>
+  <div class="form-group">
+    <label for="mail">Mail</label>
+    <input type="email" class="form-control" id="mail" placeholder="mail" name="mail">
+  </div>
+  <div class="form-group">
+    <label for="hash_password">Hash_password</label>
+    <input type="text" class="form-control" id="hash_password" placeholder="hash_password" name="hash_password">
+  </div>
+  <div class="form-group">
+    <label for="photo_path">Photo path</label>
+    <input type="text" class="form-control" id="photo_path" placeholder="photo_path" name="photo_path">
+  </div>
+  <div class="form-group">
+    <label for="about_me">About me</label>
+    <input type="text" class="form-control" id="about_me" placeholder="about_me" name="about_me">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<footer th:replace="fragments :: footer"></footer>
+
+<script th:src="@{/js/create_user.js}" type="text/javascript"></script>
+</body>
+</html>
+
+
