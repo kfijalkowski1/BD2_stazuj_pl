@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(path="/users")
+@RequestMapping(path="admin/users")
 public class UserControllerFront {
     @GetMapping(value="/allUsers")
     public String allUsers(){
         return "user/allUsers";
     }
+
+    @GetMapping(value="/createUser")
+    public String createUser() { return "user/createUser"; }
 }
