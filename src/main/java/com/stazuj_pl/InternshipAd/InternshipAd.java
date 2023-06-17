@@ -13,29 +13,36 @@ public class InternshipAd extends EntityObj {
 
     // pola z DB
     @Id
-    private int intenship_ad_id;
+    private int internship_ad_id;
 
     private String internship_description;
     private String publication_date;
     private String position_type;
-    private int salary_min;
-    private int salary_max;
+    private String salary_min;
+    private String salary_max;
     private String employment_type;
     private String work_type;
     private String keywords;
     private int address_id;
-    private int employee_id;
+    private int user_id; //employee_id
     private String expiration_date;
-    private int duration;
-
+    private String duration;
 
     // Constructors, getters, and setters automatic generate
-    public int getIntenship_ad_id() {
-        return intenship_ad_id;
+
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setIntenship_ad_id(int intenship_ad_id) {
-        this.intenship_ad_id = intenship_ad_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+    public int getInternship_ad_id() {
+        return internship_ad_id;
+    }
+
+    public void setInternship_ad_id(int internship_ad_id) {
+        this.internship_ad_id = internship_ad_id;
     }
 
     public String getInternship_description() {
@@ -62,19 +69,19 @@ public class InternshipAd extends EntityObj {
         this.position_type = position_type;
     }
 
-    public int getSalary_min() {
+    public String getSalary_min() {
         return salary_min;
     }
 
-    public void setSalary_min(int salary_min) {
+    public void setSalary_min(String salary_min) {
         this.salary_min = salary_min;
     }
 
-    public int getSalary_max() {
+    public String getSalary_max() {
         return salary_max;
     }
 
-    public void setSalary_max(int salary_max) {
+    public void setSalary_max(String salary_max) {
         this.salary_max = salary_max;
     }
 
@@ -110,14 +117,6 @@ public class InternshipAd extends EntityObj {
         this.address_id = address_id;
     }
 
-    public int getEmployee_id() {
-        return employee_id;
-    }
-
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
-    }
-
     public String getExpiration_date() {
         return expiration_date;
     }
@@ -126,11 +125,11 @@ public class InternshipAd extends EntityObj {
         this.expiration_date = expiration_date;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

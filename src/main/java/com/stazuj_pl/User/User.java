@@ -1,4 +1,4 @@
-package com.stazuj_pl.user;
+package com.stazuj_pl.User;
 
 import com.stazuj_pl.EntityObj;
 
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User extends EntityObj {
 
     // pola z DB
