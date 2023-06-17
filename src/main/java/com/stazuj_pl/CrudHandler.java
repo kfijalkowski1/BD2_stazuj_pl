@@ -24,22 +24,26 @@ public abstract class CrudHandler {
     @Autowired
     JdbcTemplate jdbcTemplate;// = new JdbcTemplate();
     protected String tableName;
+    protected String safeName = tableName;
     protected String tableMainKey;
     protected Object rowMapper;
+    protected Object safeRowMapper = rowMapper;
     protected List<String> modifiableKeys;
     private List<String> statsCountSearches = Arrays.asList("Users", "Companies", "InternshipAds", "Posts");
 
     public List<EntityObj> getAll() {
-        String sql = String.format("SELECT * FROM %s", tableName);
-        return jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper);
+//        safeName = (safeName == null) ? tableName : safeName;
+        String sql = String.format("SELECT * FROM %s", safeName);
+        return jdbcTemplate.query(sql, (BeanPropertyRowMapper) safeRowMapper);
     }
 
     public EntityObj getById(int entity_id) {
-        String sql = String.format("SELECT * FROM %s where %s = ?", tableName, tableMainKey);
+//        safeName = (safeName == null) ? tableName : safeName;
+        String sql = String.format("SELECT * FROM %s where %s = ?", safeName, tableMainKey);
         if (statsCountSearches.contains(tableName)) {
             updateStats(tableName, "views", entity_id);
         }
-        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
+        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) safeRowMapper, entity_id);
         return (entityData.size() != 1) ? null : entityData.get(0);
     }
 

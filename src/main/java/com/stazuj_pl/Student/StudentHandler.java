@@ -33,6 +33,8 @@ public class StudentHandler extends CrudHandler {
 
     StudentHandler() {
         this.tableName = "Students";
+        this.safeName = "CensoredStudents";
+        this.safeRowMapper = new BeanPropertyRowMapper<>(CensoredStudents.class);
         this.tableMainKey = "student_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Student.class);
         this.modifiableKeys = Arrays.asList("academic_year", "looking_for_job", "keywords", "academic_info_id");
@@ -58,8 +60,8 @@ public class StudentHandler extends CrudHandler {
 
     @Override
     public EntityObj getById(int entity_id) {
-        String sql = String.format("SELECT * FROM %s where user_student_id = ?", tableName, tableMainKey);
-        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
+        String sql = String.format("SELECT * FROM %s where user_student_id = ?", safeName, tableMainKey);
+        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) safeRowMapper, entity_id);
         return (entityData.size() != 1) ? null : entityData.get(0);
     }
 

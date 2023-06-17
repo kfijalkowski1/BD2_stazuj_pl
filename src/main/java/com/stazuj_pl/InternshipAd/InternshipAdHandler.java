@@ -29,6 +29,7 @@ public class InternshipAdHandler extends CrudHandler {
     InternshipAdHandler() {
         this.tableName = "InternshipAds";
         this.tableMainKey = "internship_ad_id";
+        this.safeName = "CensoredStudents";
         this.rowMapper = new BeanPropertyRowMapper<>(InternshipAd.class);
         this.modifiableKeys = Arrays.asList("internship_description", "publication_date", "position_type", "salary_min",
                 "salary_max", "employment_type", "work_type", "keywords", "address_id", "expiration_date", "duration");

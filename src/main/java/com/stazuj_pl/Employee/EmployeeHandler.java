@@ -36,6 +36,8 @@ public class EmployeeHandler extends CrudHandler {
 
     EmployeeHandler() {
         this.tableName = "Employees";
+        this.safeName = "CensoredEmployees";
+        this.safeRowMapper = new BeanPropertyRowMapper<>(CensoredEmployee.class);
         this.tableMainKey = "employee_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Employee.class);
         this.modifiableKeys = Arrays.asList("message_template", "search_number", "plan_type", "company_id");
@@ -60,8 +62,8 @@ public class EmployeeHandler extends CrudHandler {
     }
     @Override
     public EntityObj getById(int entity_id) {
-        String sql = String.format("SELECT * FROM %s where user_employee_id = ?", tableName, tableMainKey);
-        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) rowMapper, entity_id);
+        String sql = String.format("SELECT * FROM %s where user_employee_id = ?", safeName, tableMainKey);
+        List<EntityObj> entityData = jdbcTemplate.query(sql, (BeanPropertyRowMapper) safeRowMapper, entity_id);
         return (entityData.size() != 1) ? null : entityData.get(0);
     }
 
