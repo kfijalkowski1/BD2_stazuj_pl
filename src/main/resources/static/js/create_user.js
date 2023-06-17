@@ -35,5 +35,6 @@ async function postFormFieldsAsJson({ url, formData }) {
         let error = await res.text();
         throw new Error(error);
     }
+    document.getElementById("result").innerHTML = "Udalo sie! Poprawnie dodano uzytkownika do bazy danych!";
     return res.json();
 }
