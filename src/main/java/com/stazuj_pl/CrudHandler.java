@@ -22,7 +22,7 @@ public abstract class CrudHandler {
 
 
     @Autowired
-    JdbcTemplate jdbcTemplate;// = new JdbcTemplate();
+    JdbcTemplate jdbcTemplate;
     protected String tableName;
     protected String safeName = null;
     protected String tableMainKey;

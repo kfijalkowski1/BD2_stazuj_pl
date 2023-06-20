@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/internshipAd")
+@RequestMapping(path="/internshipAds")
 public class InternshipAdController {
     @Autowired
     InternshipAdHandler InternshipAdHandler;
