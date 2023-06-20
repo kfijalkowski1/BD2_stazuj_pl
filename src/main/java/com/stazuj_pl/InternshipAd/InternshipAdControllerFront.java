@@ -11,7 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(path="/internshipAds")
 public class InternshipAdControllerFront {
     @GetMapping(value="/allAds")
-    public String allUsers(){
+    public String allAds(){
         return "InternshipAd/allAds";
+    }
+
+    @GetMapping(value="/addAd")
+    public String addAd(){
+        return "InternshipAd/addAd";
     }
 }
