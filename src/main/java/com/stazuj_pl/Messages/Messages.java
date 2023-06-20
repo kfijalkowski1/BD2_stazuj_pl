@@ -16,8 +16,8 @@ public class Messages extends EntityObj {
 
     private String content;
     private String sent_time;
-    private int author_id;
-    private int receiver_id;
+    private String author_id;
+    private String receiver_id;
 
     // auto generated seters geters
 
@@ -45,19 +45,19 @@ public class Messages extends EntityObj {
         this.sent_time = sent_time;
     }
 
-    public int getAuthor_id() {
+    public String getAuthor_id() {
         return author_id;
     }
 
-    public void setAuthor_id(int author_id) {
+    public void setAuthor_id(String author_id) {
         this.author_id = author_id;
     }
 
-    public int getReceiver_id() {
+    public String getReceiver_id() {
         return receiver_id;
     }
 
-    public void setReceiver_id(int receiver_id) {
+    public void setReceiver_id(String receiver_id) {
         this.receiver_id = receiver_id;
     }
 
