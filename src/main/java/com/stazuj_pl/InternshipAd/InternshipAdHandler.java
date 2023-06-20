@@ -37,6 +37,9 @@ public class InternshipAdHandler extends CrudHandler {
     public ResponseEntity<HttpStatus> addEntity(EntityObj e) {
         try {
             InternshipAd ad = (InternshipAd) e;
+            if ("".equals(ad.getExpiration_date())) {
+                ad.setExpiration_date(null);
+            }
         String sql = String.format("INSERT INTO %s (internship_description, publication_date, position_type, " +
                 "salary_min, salary_max, employment_type, work_type, keywords, address_id, user_id, expiration_date, duration) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", tableName);
