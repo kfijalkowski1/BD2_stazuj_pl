@@ -2,6 +2,7 @@ package com.stazuj_pl.InternshipAd;
 
 
 import com.stazuj_pl.CrudHandler;
+import com.stazuj_pl.Employee.CensoredEmployee;
 import com.stazuj_pl.Employee.Employee;
 import com.stazuj_pl.Employee.EmployeeHandler;
 import com.stazuj_pl.EntityObj;
@@ -27,7 +28,8 @@ public class InternshipAdHandler extends CrudHandler {
     InternshipAdHandler() {
         this.tableName = "InternshipAds";
         this.tableMainKey = "internship_ad_id";
-        this.safeName = "CensoredStudents";
+        this.safeName = "CensoredEmployees";
+        this.safeRowMapper = new BeanPropertyRowMapper<>(CensoredEmployee.class);
         this.rowMapper = new BeanPropertyRowMapper<>(InternshipAd.class);
         this.modifiableKeys = Arrays.asList("internship_description", "publication_date", "position_type", "salary_min",
                 "salary_max", "employment_type", "work_type", "keywords", "address_id", "expiration_date", "duration");
