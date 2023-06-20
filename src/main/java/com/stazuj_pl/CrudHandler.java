@@ -24,21 +24,23 @@ public abstract class CrudHandler {
     @Autowired
     JdbcTemplate jdbcTemplate;// = new JdbcTemplate();
     protected String tableName;
-    protected String safeName = tableName;
+    protected String safeName = null;
     protected String tableMainKey;
     protected Object rowMapper;
-    protected Object safeRowMapper = rowMapper;
+    protected Object safeRowMapper = null;
     protected List<String> modifiableKeys;
     private List<String> statsCountSearches = Arrays.asList("Users", "Companies", "InternshipAds", "Posts");
 
     public List<EntityObj> getAll() {
-//        safeName = (safeName == null) ? tableName : safeName;
+        safeName = (safeName == null) ? tableName : safeName;
+        safeRowMapper = (safeRowMapper == null) ? rowMapper : safeRowMapper;
         String sql = String.format("SELECT * FROM %s", safeName);
         return jdbcTemplate.query(sql, (BeanPropertyRowMapper) safeRowMapper);
     }
 
     public EntityObj getById(int entity_id) {
-//        safeName = (safeName == null) ? tableName : safeName;
+        safeName = (safeName == null) ? tableName : safeName;
+        safeRowMapper = (safeRowMapper == null) ? rowMapper : safeRowMapper;
         String sql = String.format("SELECT * FROM %s where %s = ?", safeName, tableMainKey);
         if (statsCountSearches.contains(tableName)) {
             updateStats(tableName, "views", entity_id);
