@@ -20,5 +20,8 @@ public class AdminController {
 
     @GetMapping(value="user/createUser")
     public String createUser() { return "user/createUser"; }
+
+    @GetMapping(value="statistics")
+    public String getStatistics() { return "admin/statistics"; }
 }
 
