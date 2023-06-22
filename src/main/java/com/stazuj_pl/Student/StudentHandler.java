@@ -41,7 +41,7 @@ public class StudentHandler extends CrudHandler {
 
     StudentHandler() {
         this.tableName = "Students";
-        this.safeName = "CensoredStudents";
+        this.safeName = "StudentsPublicData";
         this.safeRowMapper = new BeanPropertyRowMapper<>(CensoredStudents.class);
         this.tableMainKey = "student_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Student.class);

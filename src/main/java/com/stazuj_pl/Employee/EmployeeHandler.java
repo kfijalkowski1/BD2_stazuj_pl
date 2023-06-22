@@ -44,7 +44,7 @@ public class EmployeeHandler extends CrudHandler {
 
     EmployeeHandler() {
         this.tableName = "Employees";
-        this.safeName = "CensoredEmployees";
+        this.safeName = "EmployeesPublicData";
         this.safeRowMapper = new BeanPropertyRowMapper<>(CensoredEmployee.class);
         this.tableMainKey = "employee_id";
         this.rowMapper = new BeanPropertyRowMapper<>(Employee.class);
