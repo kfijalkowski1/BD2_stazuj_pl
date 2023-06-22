@@ -57,7 +57,7 @@ public class UserHandler extends CrudHandler {
         List<Integer> listOfParticipants = Arrays.asList(data.get("author_id"), data.get("receiver_id"));
         for(EntityObj obj : listObj) {
             Messages message = (Messages) obj;
-            if(listOfParticipants.contains(message.getAuthor_id()) && listOfParticipants.contains(message.getReceiver_id())) {
+            if(listOfParticipants.contains(Integer.parseInt(message.getAuthor_id())) && listOfParticipants.contains(Integer.parseInt(message.getReceiver_id()))) {
                 listOfMessagesId.add(message.getMessage_id());
             }
         }
